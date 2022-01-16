@@ -87,11 +87,18 @@ export const GithubUsers = () => {
   return (
     <div>
       <div className="App">
-        <h2>Github User Repositories</h2>
-        <input type="text" onChange={getUserName} />
-        <button onClick={getUserRepositories} id={userName}>
-          Search
-        </button>
+        <h2 style={{ fontWeight: "bold" }}>Github User Repositories</h2>
+        <div style={{ margin: "1rem" }}>
+          <input type="text" onChange={getUserName} />
+          <button
+            onClick={getUserRepositories}
+            id={userName}
+            className="mainBtn"
+            style={{ marginLeft: "1rem" }}
+          >
+            Search
+          </button>
+        </div>
         <span style={{ color: "red" }}>{errorMessage}</span>
       </div>
 
