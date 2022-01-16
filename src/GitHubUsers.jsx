@@ -10,7 +10,8 @@ export const GithubUsers = () => {
   const [owner, setOwner] = useState([]);
   const [totalRepos, setTotalRepos] = useState([]);
 
-  const [followers, setFollowers] = useState([]);
+  const [followerListLeft, setFollowerListLeft] = useState([]);
+  const [followerListRight, setFollowerListRight] = useState([]);
 
   const [showDescription, setShowDescription] = useState(false);
   const [imageURL, setImageURL] = useState("");
@@ -64,7 +65,14 @@ export const GithubUsers = () => {
     axios
       .get(`https://api.github.com/users/${user}/followers`)
       .then((res) => {
-        setFollowers(res.data);
+        const result = res.data;
+
+        let half_length = Math.ceil(result.length / 2);
+        let leftSide = result.slice(0, half_length);
+        let rightSide = result.slice(half_length, result.length);
+
+        setFollowerListLeft(leftSide);
+        setFollowerListRight(rightSide);
       })
       .catch(() => {
         setErrorMessage("Error occurred. Please check network tab.");
@@ -164,30 +172,82 @@ export const GithubUsers = () => {
         </div>
       )}
 
-      {showFollowers &&
-        followers.map((obj) => (
-          <div
-            className="flex-container"
-            key={obj.id}
-            style={{ marginBottom: "1rem" }}
-          >
-            <div style={{ margin: "0 20px" }}>
-              <img
-                src={obj.avatar_url}
-                alt="Not found"
-                style={{ width: "50px", height: "50px" }}
-              ></img>
-            </div>
-            <div>
-              <div>
-                <p>UserName: {obj.login}</p>
-                <button onClick={getUserRepositories} id={obj.login}>
-                  Repositories
-                </button>
+      {showFollowers && (
+        <div className="flex-container">
+          <div>
+            {followerListLeft.map((obj) => (
+              <div
+                className="flex-container"
+                key={obj.id}
+                style={{ marginBottom: "1rem" }}
+              >
+                <div style={{ margin: "0 20px" }}>
+                  <img
+                    src={obj.avatar_url}
+                    alt="Not found"
+                    style={{ width: "60px", height: "60px" }}
+                  ></img>
+                </div>
+                <div>
+                  <div>
+                    <p>
+                      <label
+                        style={{ fontWeight: "bold", marginRight: "1.5rem" }}
+                      >
+                        UserName:
+                      </label>
+                      {obj.login}
+                    </p>
+                    <button
+                      onClick={getUserRepositories}
+                      id={obj.login}
+                      className="followRepoBtn"
+                    >
+                      Repositories
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-        ))}
+          <div>
+            {followerListRight.map((obj) => (
+              <div
+                className="flex-container"
+                key={obj.id}
+                style={{ marginBottom: "1rem" }}
+              >
+                <div style={{ margin: "0 20px" }}>
+                  <img
+                    src={obj.avatar_url}
+                    alt="Not found"
+                    style={{ width: "60px", height: "60px" }}
+                  ></img>
+                </div>
+                <div>
+                  <div>
+                    <p>
+                      <label
+                        style={{ fontWeight: "bold", marginRight: "1.5rem" }}
+                      >
+                        UserName:
+                      </label>
+                      {obj.login}
+                    </p>
+                    <button
+                      onClick={getUserRepositories}
+                      id={obj.login}
+                      className="followRepoBtn"
+                    >
+                      Repositories
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {showDescription && (
         <div>
