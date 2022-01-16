@@ -10,6 +10,8 @@ export const GithubUsers = () => {
   const [owner, setOwner] = useState([]);
   const [totalRepos, setTotalRepos] = useState([]);
 
+  const [followers, setFollowers] = useState([]);
+
   const getUserName = (e) => {
     setUserName(e.target.value);
   };
@@ -94,6 +96,31 @@ export const GithubUsers = () => {
           </div>
         </div>
       )}
+
+      {showFollowers &&
+        followers.map((obj) => (
+          <div
+            className="flex-container"
+            key={obj.id}
+            style={{ marginBottom: "1rem" }}
+          >
+            <div style={{ margin: "0 20px" }}>
+              <img
+                src={obj.avatar_url}
+                alt="Not found"
+                style={{ width: "50px", height: "50px" }}
+              ></img>
+            </div>
+            <div>
+              <div>
+                <p>UserName: {obj.login}</p>
+                <button onClick={getUserRepositories} id={obj.login}>
+                  Repositories
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
     </div>
   );
 };
