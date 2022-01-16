@@ -1,5 +1,5 @@
 import "./App.css";
-import { GithubUsers } from "./GitHubUsers";
+import { GithubUsers } from "./containers/GitHubUsers";
 
 function App() {
   return (

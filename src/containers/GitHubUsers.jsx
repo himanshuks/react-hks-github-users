@@ -3,14 +3,15 @@ import { useState } from "react";
 
 export const GithubUsers = () => {
   const [userName, setUserName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [showRepoList, setShowRepoList] = useState(false);
+  const [owner, setOwner] = useState([]);
+  const [totalRepos, setTotalRepos] = useState(0);
   const [userRepoListLeft, setUserRepoListLeftPart] = useState([]);
   const [userRepoListRight, setUserRepoListRightPart] = useState([]);
 
   const [showFollowers, setShowFollowers] = useState(false);
-  const [showRepoList, setShowRepoList] = useState(false);
-  const [owner, setOwner] = useState([]);
-  const [totalRepos, setTotalRepos] = useState([]);
-
   const [followerListLeft, setFollowerListLeft] = useState([]);
   const [followerListRight, setFollowerListRight] = useState([]);
 
@@ -19,18 +20,13 @@ export const GithubUsers = () => {
   const [currentRepoName, setCurrentRepoName] = useState("");
   const [currentRepoDescription, setCurrentRepoDescription] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState("");
-
   const getUserName = (e) => {
     setErrorMessage("");
     setUserName(e.target.value);
   };
 
   const getUserRepositories = (e) => {
-    setShowFollowers(false);
-    setShowDescription(false);
     setErrorMessage("");
-
     const user = e.target.id;
 
     if (user.length === 0) {
@@ -39,6 +35,7 @@ export const GithubUsers = () => {
       axios
         .get(`https://api.github.com/users/${user}/repos`)
         .then((res) => {
+          window.scrollTo(0, 0);
           const result = res.data;
 
           if (result.length !== 0) {
@@ -46,6 +43,8 @@ export const GithubUsers = () => {
             let leftSide = result.slice(0, half_length);
             let rightSide = result.slice(half_length, result.length);
 
+            setShowFollowers(false);
+            setShowDescription(false);
             setShowRepoList(true);
             setOwner(result[0].owner);
             setTotalRepos(result.length);
