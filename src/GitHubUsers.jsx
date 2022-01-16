@@ -12,6 +12,11 @@ export const GithubUsers = () => {
 
   const [followers, setFollowers] = useState([]);
 
+  const [showDescription, setShowDescription] = useState(false);
+  const [imageURL, setImageURL] = useState("");
+  const [currentRepoName, setCurrentRepoName] = useState("");
+  const [currentRepoDescription, setCurrentRepoDescription] = useState("");
+
   const getUserName = (e) => {
     setUserName(e.target.value);
   };
@@ -121,6 +126,44 @@ export const GithubUsers = () => {
             </div>
           </div>
         ))}
+
+      {showDescription && (
+        <div>
+          <div className="flex-container">
+            <div style={{ width: "30%" }}>
+              <div style={{ textAlign: "center" }}>
+                <img
+                  src={imageURL}
+                  alt="Not found"
+                  style={{ width: "50%", height: "40%" }}
+                ></img>
+              </div>
+              <p>Verified by GitHub</p>
+              <p>
+                GitHub confirms that this app meets the requirements for
+                verification.
+              </p>
+              <p>Categories</p>
+              <div>
+                <button>Code Review</button>
+                <button>IDEs</button>
+                <button>Free</button>
+              </div>
+              <button>Paid</button>
+            </div>
+            <div>
+              <div>
+                <h6>Application</h6>
+                <h2>{currentRepoName}</h2>
+                <button>Set up a plan</button>
+              </div>
+              <div>
+                <p>{currentRepoDescription}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
