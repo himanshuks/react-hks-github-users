@@ -103,6 +103,48 @@ export const GithubUsers = () => {
     setImageURL(obj.owner.avatar_url);
   };
 
+  const UserDetails = () => {
+    return (
+      <div>
+        <div style={{ marginBottom: "2rem" }}>
+          <div className="flex-container">
+            <div style={{ margin: "0rem 2rem" }}>
+              <img
+                src={owner.avatar_url}
+                alt="Not found"
+                style={{ width: "100px", height: "100px" }}
+              ></img>
+            </div>
+            <div>
+              <div>
+                <p>
+                  <label style={{ fontWeight: "bold", marginRight: "1.5rem" }}>
+                    UserName:
+                  </label>
+                  {owner.login}
+                </p>
+                <p>
+                  <label style={{ fontWeight: "bold", marginRight: "1.5rem" }}>
+                    Total Repos:
+                  </label>
+                  {totalRepos}
+                </p>
+                <button
+                  onClick={getUserFollowers}
+                  id={owner.login}
+                  className="mainBtn"
+                  style={{ margin: "0.5rem 0rem" }}
+                >
+                  Followers
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const DisplayUserRepo = (props) => {
     return (
       <div style={{ width: "50%", paddingRight: "3rem" }}>
@@ -180,65 +222,85 @@ export const GithubUsers = () => {
     );
   };
 
+  const DisplayRepositoryDescription = () => {
+    return (
+      <div>
+        <div className="flex-container">
+          <div style={{ width: "40%" }}>
+            <div style={{ textAlign: "center" }}>
+              <img
+                src={imageURL}
+                alt="Not found"
+                style={{ width: "30%", height: "30%", marginLeft: "12rem" }}
+              ></img>
+            </div>
+            <div style={{ padding: "2rem 0rem 2rem 15rem" }}>
+              <p>
+                &#9989;
+                <label style={{ fontWeight: "bold", marginLeft: "1.5rem" }}>
+                  Verified by GitHub
+                </label>
+              </p>
+              <p>
+                GitHub confirms that this app meets the
+                <span style={{ color: "#0d6efd" }}>
+                  &nbsp;requirements for verification
+                </span>
+                .
+              </p>
+              <p style={{ margin: "30px 0px 10px 0px" }}>Categories</p>
+              <div style={{ marginBottom: "5px" }}>
+                <button className="descBtn">Code Review</button>
+                <button className="descBtn">IDEs</button>
+                <button className="descBtn">Free</button>
+              </div>
+              <button className="descBtn">Paid</button>
+            </div>
+          </div>
+          <div>
+            <div>
+              <h5>Application</h5>
+              <h2 style={{ margin: "1.5rem 0rem 1.5rem 0rem" }}>
+                {currentRepoName}
+              </h2>
+              <button className="repoDesBtn">Set up a plan</button>
+            </div>
+            <div style={{ margin: "2rem 5rem 0rem 0rem" }}>
+              <p>{currentRepoDescription}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
-      <div className="App">
-        <h2 style={{ fontWeight: "bold" }}>Github User Repositories</h2>
-        <div style={{ margin: "1rem" }}>
-          <input type="text" onChange={getUserName} />
-          <button
-            onClick={getUserRepositories}
-            id={userName}
-            className="mainBtn"
-            style={{ marginLeft: "1rem" }}
-          >
-            Search
-          </button>
+      <div>
+        <div className="App">
+          <h2 style={{ fontWeight: "bold" }}>Github User Repositories</h2>
+          <div style={{ margin: "1rem" }}>
+            <input
+              type="text"
+              onChange={getUserName}
+              placeholder="Please enter username"
+            />
+            <button
+              onClick={getUserRepositories}
+              id={userName}
+              className="mainBtn"
+              style={{ marginLeft: "1rem" }}
+            >
+              Search
+            </button>
+          </div>
+          <span style={{ color: "red" }}>{errorMessage}</span>
         </div>
-        <span style={{ color: "red" }}>{errorMessage}</span>
       </div>
 
       {showRepoList && (
         <div>
-          <div style={{ marginBottom: "2rem" }}>
-            <div className="flex-container">
-              <div style={{ margin: "0rem 2rem" }}>
-                <img
-                  src={owner.avatar_url}
-                  alt="Not found"
-                  style={{ width: "100px", height: "100px" }}
-                ></img>
-              </div>
-              <div>
-                <div>
-                  <p>
-                    <label
-                      style={{ fontWeight: "bold", marginRight: "1.5rem" }}
-                    >
-                      UserName:
-                    </label>
-                    {owner.login}
-                  </p>
-                  <p>
-                    <label
-                      style={{ fontWeight: "bold", marginRight: "1.5rem" }}
-                    >
-                      Total Repos:
-                    </label>
-                    {totalRepos}
-                  </p>
-                  <button
-                    onClick={getUserFollowers}
-                    id={owner.login}
-                    className="mainBtn"
-                    style={{ margin: "0.5rem 0rem" }}
-                  >
-                    Followers
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <UserDetails />
           <div style={{ margin: "0rem 13rem" }}>
             <div className="flex-container">
               <DisplayUserRepo repoList={userRepoListLeft} />
@@ -257,55 +319,7 @@ export const GithubUsers = () => {
         </div>
       )}
 
-      {showDescription && (
-        <div>
-          <div className="flex-container">
-            <div style={{ width: "40%" }}>
-              <div style={{ textAlign: "center" }}>
-                <img
-                  src={imageURL}
-                  alt="Not found"
-                  style={{ width: "30%", height: "30%", marginLeft: "12rem" }}
-                ></img>
-              </div>
-              <div style={{ padding: "2rem 0rem 2rem 15rem" }}>
-                <p>
-                  &#9989;
-                  <label style={{ fontWeight: "bold", marginLeft: "1.5rem" }}>
-                    Verified by GitHub
-                  </label>
-                </p>
-                <p>
-                  GitHub confirms that this app meets the
-                  <span style={{ color: "#0d6efd" }}>
-                    &nbsp;requirements for verification
-                  </span>
-                  .
-                </p>
-                <p style={{ margin: "30px 0px 10px 0px" }}>Categories</p>
-                <div style={{ marginBottom: "5px" }}>
-                  <button className="descBtn">Code Review</button>
-                  <button className="descBtn">IDEs</button>
-                  <button className="descBtn">Free</button>
-                </div>
-                <button className="descBtn">Paid</button>
-              </div>
-            </div>
-            <div>
-              <div>
-                <h5>Application</h5>
-                <h2 style={{ margin: "1.5rem 0rem 1.5rem 0rem" }}>
-                  {currentRepoName}
-                </h2>
-                <button className="repoDesBtn">Set up a plan</button>
-              </div>
-              <div style={{ margin: "2rem 5rem 0rem 0rem" }}>
-                <p>{currentRepoDescription}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {showDescription && <DisplayRepositoryDescription />}
     </div>
   );
 };
