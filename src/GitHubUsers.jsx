@@ -71,6 +71,19 @@ export const GithubUsers = () => {
       });
   };
 
+  const showRepoDescription = (e) => {
+    setShowRepoList(false);
+    setShowFollowers(false);
+    setShowDescription(true);
+    setErrorMessage("");
+
+    const obj = JSON.parse(e.target.id);
+
+    setCurrentRepoDescription(obj.description);
+    setCurrentRepoName(obj.name);
+    setImageURL(obj.owner.avatar_url);
+  };
+
   return (
     <div>
       <div className="App">
@@ -128,7 +141,12 @@ export const GithubUsers = () => {
                       ></img>
                     </td>
                     <td>
-                      <label>{obj.name}</label>
+                      <label
+                        onClick={showRepoDescription}
+                        id={JSON.stringify(obj)}
+                      >
+                        {obj.name}
+                      </label>
                     </td>
                     <td>{obj.description}</td>
                   </tr>
