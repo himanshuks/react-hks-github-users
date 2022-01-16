@@ -54,6 +54,23 @@ export const GithubUsers = () => {
     }
   };
 
+  const getUserFollowers = (e) => {
+    setShowRepoList(false);
+    setShowFollowers(true);
+    setErrorMessage("");
+
+    const user = e.target.id;
+
+    axios
+      .get(`https://api.github.com/users/${user}/followers`)
+      .then((res) => {
+        setFollowers(res.data);
+      })
+      .catch(() => {
+        setErrorMessage("Error occurred. Please check network tab.");
+      });
+  };
+
   return (
     <div>
       <div className="App">
@@ -81,6 +98,14 @@ export const GithubUsers = () => {
                 <div>
                   <p>UserName: {owner.login}</p>
                   <p>Total Repos: {totalRepos}</p>
+                  <button
+                    onClick={getUserFollowers}
+                    id={owner.login}
+                    className="mainBtn"
+                    style={{ margin: "0.5rem 0rem" }}
+                  >
+                    Followers
+                  </button>
                 </div>
               </div>
             </div>
