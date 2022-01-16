@@ -45,6 +45,55 @@ export const GithubUsers = () => {
           Search
         </button>
       </div>
+
+      {showRepoList && (
+        <div>
+          <div>
+            <h3>User Details</h3>
+            <div className="flex-container">
+              <div>
+                <img
+                  src={owner.avatar_url}
+                  alt="Not found"
+                  style={{ width: "100px", height: "100px" }}
+                ></img>
+              </div>
+              <div>
+                <div>
+                  <p>UserName: {owner.login}</p>
+                  <p>Total Repos: {totalRepos}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <table>
+              <tbody>
+                <tr>
+                  <th></th>
+                  <th>NAME</th>
+                  <th>Description</th>
+                </tr>
+                {userRepoList.map((obj) => (
+                  <tr key={obj.id}>
+                    <td>
+                      <img
+                        src={owner.avatar_url}
+                        alt="Not found"
+                        style={{ width: "50px", height: "50px" }}
+                      ></img>
+                    </td>
+                    <td>
+                      <label>{obj.name}</label>
+                    </td>
+                    <td>{obj.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
