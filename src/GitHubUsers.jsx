@@ -192,34 +192,46 @@ export const GithubUsers = () => {
       {showDescription && (
         <div>
           <div className="flex-container">
-            <div style={{ width: "30%" }}>
+            <div style={{ width: "40%" }}>
               <div style={{ textAlign: "center" }}>
                 <img
                   src={imageURL}
                   alt="Not found"
-                  style={{ width: "50%", height: "40%" }}
+                  style={{ width: "30%", height: "30%", marginLeft: "12rem" }}
                 ></img>
               </div>
-              <p>Verified by GitHub</p>
-              <p>
-                GitHub confirms that this app meets the requirements for
-                verification.
-              </p>
-              <p>Categories</p>
-              <div>
-                <button>Code Review</button>
-                <button>IDEs</button>
-                <button>Free</button>
+              <div style={{ padding: "2rem 0rem 2rem 15rem" }}>
+                <p>
+                  &#9989;
+                  <label style={{ fontWeight: "bold", marginLeft: "1.5rem" }}>
+                    Verified by GitHub
+                  </label>
+                </p>
+                <p>
+                  GitHub confirms that this app meets the
+                  <span style={{ color: "#0d6efd" }}>
+                    &nbsp;requirements for verification
+                  </span>
+                  .
+                </p>
+                <p style={{ margin: "30px 0px 10px 0px" }}>Categories</p>
+                <div style={{ marginBottom: "5px" }}>
+                  <button className="descBtn">Code Review</button>
+                  <button className="descBtn">IDEs</button>
+                  <button className="descBtn">Free</button>
+                </div>
+                <button className="descBtn">Paid</button>
               </div>
-              <button>Paid</button>
             </div>
             <div>
               <div>
-                <h6>Application</h6>
-                <h2>{currentRepoName}</h2>
-                <button>Set up a plan</button>
+                <h5>Application</h5>
+                <h2 style={{ margin: "1.5rem 0rem 1.5rem 0rem" }}>
+                  {currentRepoName}
+                </h2>
+                <button className="repoDesBtn">Set up a plan</button>
               </div>
-              <div>
+              <div style={{ margin: "2rem 5rem 0rem 0rem" }}>
                 <p>{currentRepoDescription}</p>
               </div>
             </div>
