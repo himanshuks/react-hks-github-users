@@ -29,6 +29,7 @@ export const GithubUsers = () => {
   const getUserRepositories = (e) => {
     setShowFollowers(false);
     setShowDescription(false);
+    setErrorMessage("");
 
     const user = e.target.id;
 
@@ -38,12 +39,18 @@ export const GithubUsers = () => {
       axios
         .get(`https://api.github.com/users/${user}/repos`)
         .then((res) => {
-          console.log(`res`, res.data);
-          if (res.data.length !== 0) {
+          const result = res.data;
+
+          if (result.length !== 0) {
+            let half_length = Math.ceil(result.length / 2);
+            let leftSide = result.slice(0, half_length);
+            let rightSide = result.slice(half_length, result.length);
+
             setShowRepoList(true);
-            setOwner(res.data[0].owner);
-            setTotalRepos(res.data.length);
-            setUserRepoList(res.data);
+            setOwner(result[0].owner);
+            setTotalRepos(result.length);
+            setUserRepoListLeftPart(leftSide);
+            setUserRepoListRightPart(rightSide);
           } else {
             setErrorMessage("This user has no repos on GitHub...!!!");
           }
@@ -57,10 +64,7 @@ export const GithubUsers = () => {
   };
 
   const getUserFollowers = (e) => {
-    setShowRepoList(false);
-    setShowFollowers(true);
     setErrorMessage("");
-
     const user = e.target.id;
 
     axios
@@ -68,12 +72,18 @@ export const GithubUsers = () => {
       .then((res) => {
         const result = res.data;
 
-        let half_length = Math.ceil(result.length / 2);
-        let leftSide = result.slice(0, half_length);
-        let rightSide = result.slice(half_length, result.length);
+        if (result.length !== 0) {
+          let half_length = Math.ceil(result.length / 2);
+          let leftSide = result.slice(0, half_length);
+          let rightSide = result.slice(half_length, result.length);
 
-        setFollowerListLeft(leftSide);
-        setFollowerListRight(rightSide);
+          setShowRepoList(false);
+          setShowFollowers(true);
+          setFollowerListLeft(leftSide);
+          setFollowerListRight(rightSide);
+        } else {
+          setErrorMessage("This user has no followers on GitHub...!!!");
+        }
       })
       .catch(() => {
         setErrorMessage("Error occurred. Please check network tab.");
