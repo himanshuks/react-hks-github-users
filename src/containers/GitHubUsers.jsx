@@ -265,7 +265,7 @@ export const GithubUsers = () => {
               <button className="repoDesBtn">Set up a plan</button>
             </div>
             <div style={{ margin: "2rem 5rem 0rem 0rem" }}>
-              <p>{currentRepoDescription}</p>
+              <p style={{ width: "70%" }}>{currentRepoDescription}</p>
             </div>
           </div>
         </div>
@@ -300,7 +300,7 @@ export const GithubUsers = () => {
       {showRepoList && (
         <div>
           <UserDetails />
-          <div style={{ margin: "0rem 13rem" }}>
+          <div style={{ margin: "2rem 13rem" }}>
             <div className="flex-container">
               <DisplayUserRepo repoList={userRepoListLeft} />
               <DisplayUserRepo repoList={userRepoListRight} />
@@ -310,7 +310,7 @@ export const GithubUsers = () => {
       )}
 
       {showFollowers && (
-        <div style={{ margin: "0rem 13rem" }}>
+        <div style={{ margin: "2rem 13rem" }}>
           <div className="flex-container">
             <DisplayUserFollowers followerList={followerListLeft} />
             <DisplayUserFollowers followerList={followerListRight} />
