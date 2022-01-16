@@ -17,30 +17,41 @@ export const GithubUsers = () => {
   const [currentRepoName, setCurrentRepoName] = useState("");
   const [currentRepoDescription, setCurrentRepoDescription] = useState("");
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const getUserName = (e) => {
+    setErrorMessage("");
     setUserName(e.target.value);
   };
 
   const getUserRepositories = (e) => {
     setShowFollowers(false);
+    setShowDescription(false);
+
     const user = e.target.id;
 
-    axios
-      .get(`https://api.github.com/users/${user}/repos`)
-      .then((res) => {
-        console.log(`res`, res.data);
-        if (res.data.length !== 0) {
-          setShowRepoList(true);
-          setOwner(res.data[0].owner);
-          setTotalRepos(res.data.length);
-          setUserRepoList(res.data);
-        } else {
-          console.log("User has no repos...");
-        }
-      })
-      .catch((err) => {
-        console.log("Error occurred", err);
-      });
+    if (user.length === 0) {
+      setErrorMessage("Username can't be blank...!!!");
+    } else {
+      axios
+        .get(`https://api.github.com/users/${user}/repos`)
+        .then((res) => {
+          console.log(`res`, res.data);
+          if (res.data.length !== 0) {
+            setShowRepoList(true);
+            setOwner(res.data[0].owner);
+            setTotalRepos(res.data.length);
+            setUserRepoList(res.data);
+          } else {
+            setErrorMessage("This user has no repos on GitHub...!!!");
+          }
+        })
+        .catch(() => {
+          setErrorMessage(
+            "Oops, it seems this user doesn't exist on GitHub...!!!"
+          );
+        });
+    }
   };
 
   return (
@@ -51,6 +62,7 @@ export const GithubUsers = () => {
         <button onClick={getUserRepositories} id={userName}>
           Search
         </button>
+        <span style={{ color: "red" }}>{errorMessage}</span>
       </div>
 
       {showRepoList && (
