@@ -92,6 +92,45 @@ export const GithubUsers = () => {
     setImageURL(obj.owner.avatar_url);
   };
 
+  const DisplayUserFollowers = (props) => {
+    return (
+      <div>
+        {props.followerList.map((obj) => (
+          <div
+            className="flex-container"
+            key={obj.id}
+            style={{ marginBottom: "1rem" }}
+          >
+            <div style={{ margin: "0 20px" }}>
+              <img
+                src={obj.avatar_url}
+                alt="Not found"
+                style={{ width: "60px", height: "60px" }}
+              ></img>
+            </div>
+            <div>
+              <div>
+                <p>
+                  <label style={{ fontWeight: "bold", marginRight: "1.5rem" }}>
+                    UserName:
+                  </label>
+                  {obj.login}
+                </p>
+                <button
+                  onClick={getUserRepositories}
+                  id={obj.login}
+                  className="followRepoBtn"
+                >
+                  Repositories
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div>
       <div className="App">
@@ -173,78 +212,10 @@ export const GithubUsers = () => {
       )}
 
       {showFollowers && (
-        <div className="flex-container">
-          <div>
-            {followerListLeft.map((obj) => (
-              <div
-                className="flex-container"
-                key={obj.id}
-                style={{ marginBottom: "1rem" }}
-              >
-                <div style={{ margin: "0 20px" }}>
-                  <img
-                    src={obj.avatar_url}
-                    alt="Not found"
-                    style={{ width: "60px", height: "60px" }}
-                  ></img>
-                </div>
-                <div>
-                  <div>
-                    <p>
-                      <label
-                        style={{ fontWeight: "bold", marginRight: "1.5rem" }}
-                      >
-                        UserName:
-                      </label>
-                      {obj.login}
-                    </p>
-                    <button
-                      onClick={getUserRepositories}
-                      id={obj.login}
-                      className="followRepoBtn"
-                    >
-                      Repositories
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div>
-            {followerListRight.map((obj) => (
-              <div
-                className="flex-container"
-                key={obj.id}
-                style={{ marginBottom: "1rem" }}
-              >
-                <div style={{ margin: "0 20px" }}>
-                  <img
-                    src={obj.avatar_url}
-                    alt="Not found"
-                    style={{ width: "60px", height: "60px" }}
-                  ></img>
-                </div>
-                <div>
-                  <div>
-                    <p>
-                      <label
-                        style={{ fontWeight: "bold", marginRight: "1.5rem" }}
-                      >
-                        UserName:
-                      </label>
-                      {obj.login}
-                    </p>
-                    <button
-                      onClick={getUserRepositories}
-                      id={obj.login}
-                      className="followRepoBtn"
-                    >
-                      Repositories
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+        <div style={{ margin: "0rem 13rem" }}>
+          <div className="flex-container">
+            <DisplayUserFollowers followerList={followerListLeft} />
+            <DisplayUserFollowers followerList={followerListRight} />
           </div>
         </div>
       )}
