@@ -3,7 +3,8 @@ import { useState } from "react";
 
 export const GithubUsers = () => {
   const [userName, setUserName] = useState("");
-  const [userRepoList, setUserRepoList] = useState([]);
+  const [userRepoListLeft, setUserRepoListLeftPart] = useState([]);
+  const [userRepoListRight, setUserRepoListRightPart] = useState([]);
 
   const [showFollowers, setShowFollowers] = useState(false);
   const [showRepoList, setShowRepoList] = useState(false);
@@ -92,6 +93,44 @@ export const GithubUsers = () => {
     setImageURL(obj.owner.avatar_url);
   };
 
+  const DisplayUserRepo = (props) => {
+    return (
+      <div style={{ width: "50%", paddingRight: "3rem" }}>
+        {props.repoList.map((obj) => (
+          <div
+            className="flex-container"
+            key={obj.id}
+            style={{ marginBottom: "1rem" }}
+          >
+            <div>
+              <img
+                src={owner.avatar_url}
+                alt="Not found"
+                style={{ width: "50px", height: "50px" }}
+              ></img>
+            </div>
+            <div>
+              <p>
+                <label
+                  onClick={showRepoDescription}
+                  id={JSON.stringify(obj)}
+                  style={{
+                    cursor: "pointer",
+                    color: "#0969da",
+                    textDecoration: "underline",
+                  }}
+                >
+                  {obj.name} &#9989;
+                </label>
+              </p>
+              <p>{obj.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   const DisplayUserFollowers = (props) => {
     return (
       <div>
@@ -151,10 +190,9 @@ export const GithubUsers = () => {
 
       {showRepoList && (
         <div>
-          <div>
-            <h3>User Details</h3>
+          <div style={{ marginBottom: "2rem" }}>
             <div className="flex-container">
-              <div>
+              <div style={{ margin: "0rem 2rem" }}>
                 <img
                   src={owner.avatar_url}
                   alt="Not found"
@@ -163,8 +201,22 @@ export const GithubUsers = () => {
               </div>
               <div>
                 <div>
-                  <p>UserName: {owner.login}</p>
-                  <p>Total Repos: {totalRepos}</p>
+                  <p>
+                    <label
+                      style={{ fontWeight: "bold", marginRight: "1.5rem" }}
+                    >
+                      UserName:
+                    </label>
+                    {owner.login}
+                  </p>
+                  <p>
+                    <label
+                      style={{ fontWeight: "bold", marginRight: "1.5rem" }}
+                    >
+                      Total Repos:
+                    </label>
+                    {totalRepos}
+                  </p>
                   <button
                     onClick={getUserFollowers}
                     id={owner.login}
@@ -177,36 +229,11 @@ export const GithubUsers = () => {
               </div>
             </div>
           </div>
-          <div>
-            <table>
-              <tbody>
-                <tr>
-                  <th></th>
-                  <th>NAME</th>
-                  <th>Description</th>
-                </tr>
-                {userRepoList.map((obj) => (
-                  <tr key={obj.id}>
-                    <td>
-                      <img
-                        src={owner.avatar_url}
-                        alt="Not found"
-                        style={{ width: "50px", height: "50px" }}
-                      ></img>
-                    </td>
-                    <td>
-                      <label
-                        onClick={showRepoDescription}
-                        id={JSON.stringify(obj)}
-                      >
-                        {obj.name}
-                      </label>
-                    </td>
-                    <td>{obj.description}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div style={{ margin: "0rem 13rem" }}>
+            <div className="flex-container">
+              <DisplayUserRepo repoList={userRepoListLeft} />
+              <DisplayUserRepo repoList={userRepoListRight} />
+            </div>
           </div>
         </div>
       )}
